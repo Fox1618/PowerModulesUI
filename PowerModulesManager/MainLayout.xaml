@@ -57,13 +57,11 @@
                 <Label Content="Frequency get data: " VerticalAlignment="Center"/>
                 <TextBox Text="{Binding FreqGetData}" VerticalContentAlignment="Center"  MinWidth="100"/>
             </StackPanel>
-        <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left">
-            <Button Content=" Start " IsEnabled="{Binding StartButtonEnable}" Command="{Binding StartCmd}" Margin="45, 5, 5, 5" MinWidth="100" MinHeight="40"/>
+            <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Left">
+                <Button Content=" Start " IsEnabled="{Binding StartButtonEnable}" Command="{Binding StartCmd}" Margin="45, 5, 5, 5" MinWidth="100" MinHeight="40"/>
+            <Button Content=" Stop " IsEnabled="{Binding StartButtonEnable}" Command="{Binding StopCmd}" Margin="45, 5, 5, 5" MinWidth="100" MinHeight="40"/>
+            <Button Content=" Stop statuses" IsEnabled="{Binding StartButtonEnable}" Command="{Binding StopBroadcastCmd}" Margin="45, 5, 5, 5" MinWidth="100" MinHeight="40"/>
             </StackPanel>
-            <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Left">
-            <Button Content=" Stop " IsEnabled="{Binding StopButtonEnable}" Command="{Binding StopCmd}" Margin="45, 5, 5, 5" MinWidth="100" MinHeight="40"/>
-            </StackPanel>
-
             <DataGrid x:Name="TestEvDg" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3"  features:DataGridBehavior.Autoscroll="True"
                  ItemsSource="{Binding Statuses}"
                  AutoGenerateColumns="False" Margin="5" IsReadOnly="false" CanUserAddRows="False"

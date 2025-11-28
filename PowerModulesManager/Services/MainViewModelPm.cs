@@ -27,13 +27,14 @@ namespace PowerModulesManager.Services
             TypesModuleList = Enum.GetValues(typeof(PowerSupplyType)).Cast<PowerSupplyType>().ToList();
             StartCmd = new RelayCommand(startCmdExecute);
             StopCmd = new RelayCommand(stopCmdExecute);
-            CanAddress = 130;
+            StopBroadcastCmd = new RelayCommand(stopBroadcastCmdExecute);
+            CanAddressStr = "1";
             FreqGetData = 3;
             Voltage = "343";
             Current = "133";
             TypeModule = PowerSupplyType.Tonhe;
             Statuses = new AsyncObservableCollection<StatusPm>();
-            StopButtonEnable = true;
+            //StopButtonEnable = true;
             StartButtonEnable = true;
             PropertyChanged += OnPropertyChanged;
         }
@@ -52,12 +53,23 @@ namespace PowerModulesManager.Services
                 initSender();
             }
         }
-
+        private async void stopBroadcastCmdExecute()
+        {
+            await Task.Run(async () =>
+            {
+                StartButtonEnable = false;
+                stopGetStates();
+            }).ContinueWith(x =>
+            {
+                Thread.Sleep(500);
+                StartButtonEnable = true;
+            });
+        }
         private async void stopCmdExecute()
         {
             await Task.Run(async () =>
             {
-                StopButtonEnable = false;
+                StartButtonEnable = false;
                 //stopGetStates();
                 if(!checkBase()) return;
                 _pmSender.Start();
@@ -70,8 +82,8 @@ namespace PowerModulesManager.Services
                 }
             }).ContinueWith(x =>
             {
-                Thread.Sleep(1000);
-                StopButtonEnable = true;
+                Thread.Sleep(500);
+                StartButtonEnable = true;
             });
         }
 
@@ -95,7 +107,7 @@ namespace PowerModulesManager.Services
                 startGetStates();
             }).ContinueWith(x =>
             {
-                Thread.Sleep(1000);
+                Thread.Sleep(500);
                 StartButtonEnable = true;
             });
         }
@@ -118,6 +130,8 @@ namespace PowerModulesManager.Services
         public string Current { get; set; }
         public ICommand StartCmd { get; set; }
         public ICommand StopCmd { get; set; }
+
+        public ICommand StopBroadcastCmd { get; set; }
         public AsyncObservableCollection<StatusPm> Statuses { get; set; }
         public string CanAddressStr { get; set; }
         public byte CanAddress { get; set; }
@@ -125,7 +139,7 @@ namespace PowerModulesManager.Services
         public PowerSupplyType? TypeModule { get; set; }
         public List<PowerSupplyType> TypesModuleList { get; set; }
         public bool StartButtonEnable { get; set; }
-        public bool StopButtonEnable { get; set; }
+        //public bool StopButtonEnable { get; set; }
         public int FreqGetData { get; set; }
         private (float voltage, float current)? checkStartData()
         {
