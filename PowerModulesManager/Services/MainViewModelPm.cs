@@ -29,10 +29,10 @@ namespace PowerModulesManager.Services
             StopCmd = new RelayCommand(stopCmdExecute);
             StopBroadcastCmd = new RelayCommand(stopBroadcastCmdExecute);
             CanAddressStr = "1";
-            FreqGetData = 3;
-            Voltage = "343";
-            Current = "133";
-            TypeModule = PowerSupplyType.Tonhe;
+            FreqGetData = 1;
+            Voltage = "400";
+            Current = "100";
+            TypeModule = PowerSupplyType.Uugp;
             Statuses = new AsyncObservableCollection<StatusPm>();
             //StopButtonEnable = true;
             StartButtonEnable = true;
