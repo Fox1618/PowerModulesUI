@@ -93,19 +93,19 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
   
-    <Reference Include="Telemetria.ApplicationBase.Common"><HintPath>..\..\ddls\Telemetria.ApplicationBase.Common.dll</HintPath></Reference>
-    <Reference Include="Telemetria.ApplicationBase.WPF"><HintPath>..\..\ddls\Telemetria.ApplicationBase.WPF.dll</HintPath></Reference>
-    <Reference Include="Hardware.DeviceSending"><HintPath>..\..\ddls\Hardware.DeviceSending.dll</HintPath></Reference>
-    <Reference Include="Telemetria.Hardware.TcpDevices"><HintPath>..\..\ddls\Telemetria.Hardware.TcpDevices.dll</HintPath></Reference>
-    <Reference Include="Persistence.EntityFramework.Common"><HintPath>..\..\ddls\Persistence.EntityFramework.Common.dll</HintPath></Reference>
-    <Reference Include="Persistence.EntityFramework.Light"><HintPath>..\..\ddls\Persistence.EntityFramework.Light.dll</HintPath></Reference>
-    <Reference Include="ProgrammingWeapons"><HintPath>..\..\ddls\ProgrammingWeapons.dll</HintPath></Reference>
-    <Reference Include="ProgrammingWeapons.EntityFramework"><HintPath>..\..\ddls\ProgrammingWeapons.EntityFramework.dll</HintPath></Reference>
-    <Reference Include="ProgrammingWeapons.Logging.Log4Net"><HintPath>..\..\ddls\ProgrammingWeapons.Logging.Log4Net.dll</HintPath></Reference>
-    <Reference Include="Telemetria.Common"><HintPath>..\..\ddls\Telemetria.Common.dll</HintPath></Reference>
-    <Reference Include="Telemetria.Core.UI"><HintPath>..\..\ddls\Telemetria.Core.UI.dll</HintPath></Reference>
-    <Reference Include="Telemetria.Core"><HintPath>..\..\ddls\Telemetria.Core.dll</HintPath></Reference>
-    <Reference Include="Telemetria.UI"><HintPath>..\..\ddls\Telemetria.UI.dll</HintPath></Reference>
+    <Reference Include="Telemetria.ApplicationBase.Common"><HintPath>..\ddls\Telemetria.ApplicationBase.Common.dll</HintPath></Reference>
+    <Reference Include="Telemetria.ApplicationBase.WPF"><HintPath>..\ddls\Telemetria.ApplicationBase.WPF.dll</HintPath></Reference>
+    <Reference Include="Hardware.DeviceSending"><HintPath>..\ddls\Hardware.DeviceSending.dll</HintPath></Reference>
+    <Reference Include="Telemetria.Hardware.TcpDevices"><HintPath>..\ddls\Telemetria.Hardware.TcpDevices.dll</HintPath></Reference>
+    <Reference Include="Persistence.EntityFramework.Common"><HintPath>..\ddls\Persistence.EntityFramework.Common.dll</HintPath></Reference>
+    <Reference Include="Persistence.EntityFramework.Light"><HintPath>..\ddls\Persistence.EntityFramework.Light.dll</HintPath></Reference>
+    <Reference Include="ProgrammingWeapons"><HintPath>..\ddls\ProgrammingWeapons.dll</HintPath></Reference>
+    <Reference Include="ProgrammingWeapons.EntityFramework"><HintPath>..\ddls\ProgrammingWeapons.EntityFramework.dll</HintPath></Reference>
+    <Reference Include="ProgrammingWeapons.Logging.Log4Net"><HintPath>..\ddls\ProgrammingWeapons.Logging.Log4Net.dll</HintPath></Reference>
+    <Reference Include="Telemetria.Common"><HintPath>..\ddls\Telemetria.Common.dll</HintPath></Reference>
+    <Reference Include="Telemetria.Core.UI"><HintPath>..\ddls\Telemetria.Core.UI.dll</HintPath></Reference>
+    <Reference Include="Telemetria.Core"><HintPath>..\ddls\Telemetria.Core.dll</HintPath></Reference>
+    <Reference Include="Telemetria.UI"><HintPath>..\ddls\Telemetria.UI.dll</HintPath></Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BottomPanel.cs" />
