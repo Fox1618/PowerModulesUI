@@ -55,7 +55,7 @@ namespace PowerModulesManager.Services
         }
         private async void stopBroadcastCmdExecute()
         {
-            await Task.Run(async () =>
+            await Task.Run(() =>
             {
                 StartButtonEnable = false;
                 stopGetStates();
@@ -162,7 +162,7 @@ namespace PowerModulesManager.Services
 
         private bool checkBase()
         {
-            if (TypeModule != PowerSupplyType.Tonhe & TypeModule != PowerSupplyType.Uugp)
+            if (!isSupportedPowerModule(TypeModule))
             {
                 sendMessage(MessageType.Warning, $"Тип модуля {TypeModule.ToString()} пока не поддерживается");
                 return false;
@@ -177,6 +177,16 @@ namespace PowerModulesManager.Services
             _pmSender = _factoryPm.GetPmSender(TypeModule);
             return true;
         }
+
+        private bool isSupportedPowerModule(PowerSupplyType? powerSupplyType)
+        {
+            if (!powerSupplyType.HasValue) return false;
+            var typeName = powerSupplyType.Value.ToString();
+            return string.Equals(typeName, nameof(PowerSupplyType.Tonhe), StringComparison.OrdinalIgnoreCase)
+                || string.Equals(typeName, nameof(PowerSupplyType.Uugp), StringComparison.OrdinalIgnoreCase)
+                || typeName.IndexOf("Pscs", StringComparison.OrdinalIgnoreCase) >= 0;
+        }
+
         private bool tryCastToFloat(string value, out float valueFloat)
         {
             value = value?.Replace(",", ".");
