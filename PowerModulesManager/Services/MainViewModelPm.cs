@@ -43,8 +43,8 @@ namespace PowerModulesManager.Services
         {
             //if(TypeModule == null) return;
             _pmSender?.Stop();
-            //_pmSender = _factoryPm.GetPmSender(TypeModule);
-            //_pmSender?.Start();
+            _pmSender = _factoryPm.GetPmSender(TypeModule);
+            _pmSender?.Start();
         }
         private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
@@ -70,9 +70,8 @@ namespace PowerModulesManager.Services
             await Task.Run(async () =>
             {
                 StartButtonEnable = false;
-                //stopGetStates();
+                stopGetStates();
                 if(!checkBase()) return;
-                _pmSender.Start();
                 var resStop = await _pmSender.PowerOnOffSpecModule(false, CanAddress, null, null);
                 if (!resStop)
                     sendMessage(MessageType.Error, "Не удалось остановить модуль");
@@ -80,6 +79,7 @@ namespace PowerModulesManager.Services
                 {
                     sendMessage(MessageType.Information, "Модуль успешно остановлен");
                 }
+                _pmSender.Stop();
             }).ContinueWith(x =>
             {
                 Thread.Sleep(500);
@@ -215,7 +215,9 @@ namespace PowerModulesManager.Services
                 {
                     var status = await _pmSender.GetVoltageCurrentAndStatus(CanAddress);
                     if (status != null)
+                    {
                         Statuses.Add(new StatusPm(_currentTestId) { PmData = status });
+                    }
                     await checkCancellation(FreqGetData);
                 }
             });
