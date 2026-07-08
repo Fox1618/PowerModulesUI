@@ -25,9 +25,6 @@ namespace PowerModulesManager
             Bind<IBindRepository>().To<Repository>().InSingletonScope();
             Bind<FactoryPm>().ToSelf().InSingletonScope();
             Bind<TcpDevice>().ToSelf().InSingletonScope();
-            Bind<Hardware.DeviceSending.Interfaces.IDeviceSending>().ToMethod(x => x.Kernel.Get<TcpDevice>()).InSingletonScope();
-            Bind(typeof(IParserPmModulesRPackage<>)).To(typeof(ParserSinexcelRPackage<>)).InSingletonScope();
-            Bind<IParserOuterPackPmModules>().To<ParserOuterPackPmModules>().InSingletonScope();
         }
     }
 
