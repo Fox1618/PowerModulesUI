@@ -3,6 +3,9 @@ using Ninject.Modules;
 using PowerModulesManager.Services;
 using ProgrammingWeapons.EntityFramework;
 using Telemetria;
+using Telemetria.Hardware.PowerModules.Common;
+using Telemetria.Hardware.PowerModules.Interfaces;
+using Telemetria.Hardware.PowerModules.ParsersRPack;
 using Telemetria.Hardware.TcpDevices;
 using Telemetria.Persistence;
 using Telemetria.Persistence.Light.Services;
@@ -22,6 +25,9 @@ namespace PowerModulesManager
             Bind<IBindRepository>().To<Repository>().InSingletonScope();
             Bind<FactoryPm>().ToSelf().InSingletonScope();
             Bind<TcpDevice>().ToSelf().InSingletonScope();
+            Bind<Hardware.DeviceSending.Interfaces.IDeviceSending>().ToMethod(x => x.Kernel.Get<TcpDevice>()).InSingletonScope();
+            Bind(typeof(IParserPmModulesRPackage<>)).To(typeof(ParserSinexcelRPackage<>)).InSingletonScope();
+            Bind<IParserOuterPackPmModules>().To<ParserOuterPackPmModules>().InSingletonScope();
         }
     }
 
