@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -43,8 +42,8 @@ namespace PowerModulesManager.Services
         {
             //if(TypeModule == null) return;
             _pmSender?.Stop();
-            //_pmSender = _factoryPm.GetPmSender(TypeModule);
-            //_pmSender?.Start();
+            _pmSender = _factoryPm.GetPmSender(TypeModule);
+            _pmSender?.Start();
         }
         private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
@@ -55,7 +54,7 @@ namespace PowerModulesManager.Services
         }
         private async void stopBroadcastCmdExecute()
         {
-            await Task.Run(async () =>
+            await Task.Run(() =>
             {
                 StartButtonEnable = false;
                 stopGetStates();
@@ -70,9 +69,8 @@ namespace PowerModulesManager.Services
             await Task.Run(async () =>
             {
                 StartButtonEnable = false;
-                //stopGetStates();
+                stopGetStates();
                 if(!checkBase()) return;
-                _pmSender.Start();
                 var resStop = await _pmSender.PowerOnOffSpecModule(false, CanAddress, null, null);
                 if (!resStop)
                     sendMessage(MessageType.Error, "Не удалось остановить модуль");
@@ -80,6 +78,7 @@ namespace PowerModulesManager.Services
                 {
                     sendMessage(MessageType.Information, "Модуль успешно остановлен");
                 }
+                _pmSender.Stop();
             }).ContinueWith(x =>
             {
                 Thread.Sleep(500);
@@ -162,7 +161,7 @@ namespace PowerModulesManager.Services
 
         private bool checkBase()
         {
-            if (TypeModule != PowerSupplyType.Tonhe & TypeModule != PowerSupplyType.Uugp)
+            if (!isSupportedPowerModule(TypeModule))
             {
                 sendMessage(MessageType.Warning, $"Тип модуля {TypeModule.ToString()} пока не поддерживается");
                 return false;
@@ -177,6 +176,16 @@ namespace PowerModulesManager.Services
             _pmSender = _factoryPm.GetPmSender(TypeModule);
             return true;
         }
+
+        private bool isSupportedPowerModule(PowerSupplyType? powerSupplyType)
+        {
+            if (!powerSupplyType.HasValue) return false;
+            var typeName = powerSupplyType.Value.ToString();
+            return string.Equals(typeName, nameof(PowerSupplyType.Tonhe), StringComparison.OrdinalIgnoreCase)
+                || string.Equals(typeName, nameof(PowerSupplyType.Uugp), StringComparison.OrdinalIgnoreCase)
+                || typeName.IndexOf("Pscs", StringComparison.OrdinalIgnoreCase) >= 0;
+        }
+
         private bool tryCastToFloat(string value, out float valueFloat)
         {
             value = value?.Replace(",", ".");
@@ -205,7 +214,9 @@ namespace PowerModulesManager.Services
                 {
                     var status = await _pmSender.GetVoltageCurrentAndStatus(CanAddress);
                     if (status != null)
+                    {
                         Statuses.Add(new StatusPm(_currentTestId) { PmData = status });
+                    }
                     await checkCancellation(FreqGetData);
                 }
             });
